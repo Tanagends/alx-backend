@@ -19,8 +19,12 @@ class LFUCache(BaseCaching):
             self.cache_data[key] = item
 
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                discard_key = sorted(list(LFUCache.FREQ_BITS.items()),
-                                     key=lambda v: v[1])[0][0]
+                discard_keys = sorted(list(LFUCache.FREQ_BITS.items()),
+                                     key=lambda v: v[1])[0:2]
+                if discard_keys[0][0] == key:
+                    discard_key = discard_keys[1][0]
+                else:
+                    discard_key = discard_keys[0][0]
                 del self.cache_data[discard_key]
                 del LFUCache.FREQ_BITS[discard_key]
                 print("DISCARD: {}".format(discard_key))
