@@ -20,7 +20,7 @@ class LFUCache(BaseCaching):
 
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
                 discard_keys = sorted(list(LFUCache.FREQ_BITS.items()),
-                                     key=lambda v: v[1])[0:2]
+                                      key=lambda v: v[1])[0:2]
                 if discard_keys[0][0] == key:
                     discard_key = discard_keys[1][0]
                 else:
