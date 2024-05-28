@@ -11,7 +11,7 @@ babel = Babel(app)
 class Config:
     """configures a flask app"""
     LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_LOCALE = 'fr'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
@@ -27,6 +27,12 @@ def index():
 @babel.localeselector
 def get_locale():
     """Determines best match with our supported languages"""
+
+    req = request.args.get('locale')
+
+    if req and req in app.config['LANGUAGES']:
+        return req
+        
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
